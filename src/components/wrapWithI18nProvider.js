@@ -1,7 +1,6 @@
 import React from "react"
 import i18next from "i18next"
-import * as ReactI18next from "react-i18next"
-import { Helmet } from "react-helmet"
+import { initReactI18next, I18nextProvider } from "react-i18next"
 
 export const AlternateLinksContext = React.createContext([])
 
@@ -13,29 +12,17 @@ export function wrapWithI18nProvider({ element, props }) {
       initImmediate: false,
       resources: props.pageContext.i18nResources,
     })
-    .use(ReactI18next.initReactI18next)
-  // noinspection JSIgnoredPromiseFromCall
+    .use(initReactI18next)
+
   i18n.init()
+  
   return (
-    <ReactI18next.I18nextProvider i18n={i18n}>
+    <I18nextProvider i18n={i18n}>
       <AlternateLinksContext.Provider
         value={props.pageContext && props.pageContext.alternateLinks}
       >
-        {
-          <Helmet htmlAttributes={{ lang: props.pageContext.language }}>
-            {props.pageContext &&
-              props.pageContext.alternateLinks &&
-              props.pageContext.alternateLinks.map(link => (
-                <link
-                  rel="alternate"
-                  hrefLang={link.language}
-                  href={link.path}
-                />
-              ))}
-          </Helmet>
-        }
         {element}
       </AlternateLinksContext.Provider>
-    </ReactI18next.I18nextProvider>
+    </I18nextProvider>
   )
 }

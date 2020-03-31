@@ -1,9 +1,3 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
 const fs = require("fs")
 const path = require("path")
 const i18next = require("i18next")
@@ -16,7 +10,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 const srcPath = resolveApp("src")
 
 exports.createPages = async ({ actions: { createPage, createRedirect } }) => {
-  const homeTemplate = path.resolve(`src/templates/Home.js`)
+  const homeTemplate = path.resolve(`src/templates/home.js`)
   await buildI18nPages(
     null,
     (_, language) => ({
