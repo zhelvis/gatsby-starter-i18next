@@ -15,10 +15,7 @@ const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath)
 const srcPath = resolveApp("src")
 
-exports.createPages = async ({
-  graphql,
-  actions: { createPage, createRedirect },
-}) => {
+exports.createPages = async ({ actions: { createPage, createRedirect } }) => {
   const homeTemplate = path.resolve(`src/templates/Home.js`)
   await buildI18nPages(
     null,
@@ -28,32 +25,6 @@ exports.createPages = async ({
       context: {},
     }),
     ["common", "home"],
-    createPage
-  )
-
-  const shopTemplate = path.resolve(`src/templates/Shop.js`)
-  const shops = await graphql(`
-    query Shop {
-      allSanityShop {
-        edges {
-          node {
-            id
-            _rawSlug
-          }
-        }
-      }
-    }
-  `)
-  await buildI18nPages(
-    shops.data.allSanityShop.edges,
-    ({ node }, language, i18n) => ({
-      path: `/${language}/${i18n.t("common:shopSlug")}/${
-        node._rawSlug[language]
-      }`,
-      component: shopTemplate,
-      context: { shop: node.id },
-    }),
-    ["common", "shop"],
     createPage
   )
 
@@ -141,18 +112,4 @@ const build404Pages = async createPage => {
       }
     })
   )
-}
-
-exports.createResolvers = ({ createResolvers }) => {
-  createResolvers({
-    SanityLocaleString: {
-      translate: {
-        type: `String!`,
-        args: { language: { type: "String" } },
-        resolve: (source, args) => {
-          return source[args.language] || source["en"]
-        },
-      },
-    },
-  })
 }
