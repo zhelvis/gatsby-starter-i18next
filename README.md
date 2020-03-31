@@ -17,4 +17,8 @@ forked from https://github.com/johannesspohr/gatsby-starter-i18next-sanity
 ## diffs
 
 - delete CMS dependences
+- rewrite page render
+    - generate prefexed pages from default instead using templates
+    - language and namespace settings in separate config
+
 

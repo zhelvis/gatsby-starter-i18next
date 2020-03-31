@@ -4,11 +4,11 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useTranslation } from "react-i18next"
 
-const IndexPage = props => {
-  const { t } = useTranslation("home")
+const IndexPage = () => {
+  const { t } = useTranslation("index")
 
   return (
-    <Layout alternateLink={props.alternateLinks}>
+    <Layout>
       <SEO title="Home" />
       <h1>{t("hi")}</h1>
       <p>{t("welcome")}</p>
