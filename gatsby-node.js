@@ -44,22 +44,24 @@ exports.onCreatePage = ({ page, actions: { createPage, deletePage } }) => {
       path: getLocalzedPath(page.path, altLocale, defaultLocale),
     }))
 
+    const isDefault404 = localizedPath === "/404/"
+    const isPrefixed404 = /^\/[a-z]{2}\/404\/$/.test(localizedPath)
+    const is404 = isDefault404 || isPrefixed404
+
     return createPage({
       ...page,
       path: localizedPath,
-      // for prefixed 404 pages
-      ...(/^\/[a-z]{2}\/404\/$/.test(localizedPath) && {
-        matchPath: `/${locale}/*`,
-      }),
-      //for default 404 page
-      ...(localizedPath === "/404/" && {
+      ...(isDefault404 && {
         matchPath: "/*",
+      }),
+      ...(isPrefixed404 && {
+        matchPath: `/${locale}/*`,
       }),
       context: {
         ...page.context,
         language: locale,
         i18nResources: i18n.services.resourceStore.data,
-        alternateLinks,
+        ...(!is404 && { alternateLinks }),
       },
     })
   })

@@ -1,15 +1,18 @@
 import React from "react"
 import { useTranslation } from "react-i18next"
+import LocalizedLink from "./localizedLink"
+import LocaleSwitcher from "./localeSwitcher"
 
 const Header = () => {
-  const { t, i18n } = useTranslation("common")
+  const { t } = useTranslation("common")
 
   return (
     <header>
       <div>
         <h1>
-          {t("title")}
+          <LocalizedLink to="/">{t("title")}</LocalizedLink>
         </h1>
+        <LocaleSwitcher />
       </div>
     </header>
   )

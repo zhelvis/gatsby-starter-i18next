@@ -20,5 +20,12 @@ forked from https://github.com/johannesspohr/gatsby-starter-i18next-sanity
 - rewrite page render
     - generate prefexed pages from default instead using templates
     - language and namespace settings in separate config
+- add default locale
+- add `LocalizedLink` component
+
+
+## TODO
+
+- rewrite Seo component
 
 
